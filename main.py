@@ -32,7 +32,7 @@ class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         logger.info('preferences %s', json.dumps(extension.preferences))
         query = event.get_argument()
-        if query == '':
+        if query.strip() == '':
             return []
         url = 'https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}'.format(key, cx, query)
         url_stream = urllib.request.urlopen(url)
