@@ -37,11 +37,14 @@ class KeywordQueryEventListener(EventListener):
         response = url_stream.read().decode('utf-8')
         json_string = json.loads(response)
         items = []
-        items.append(ExtensionResultItem(icon='images/icon.png',
-                                        name=json_string['items'][0]['title'],
-                                        description=json_string['items'][0]['snippet'],
-                                        # todo filter by og:locale
-                                        on_enter=OpenUrlAction(json_string['items'][0]['pagemap']['metatags'][0]['og:url'])))
+        json_items = json_string['items']
+        for item in json_items:
+            items.append(ExtensionResultItem(
+                icon='images/icon.png',
+                name=item['title'],
+                description=item['snippet'],
+                # could filter by og:locale
+                on_enter=OpenUrlAction(item['pagemap']['metatags'][0]['og:url'])))
 
         return RenderResultListAction(items)
 

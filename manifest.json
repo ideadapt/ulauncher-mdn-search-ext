@@ -3,14 +3,15 @@
   "name": "ulauncher-mdn-search-ext",
   "description": "Search Mozilla Developer Network (MDN) Documentation in Ulauncher",
   "developer_name": "Ueli Kunz",
-  "icon": "images/icon.png",
+  "icon": "images/mdn.webp",
   "options": {
+    "query_debounce": 0.1
   },
   "preferences": [
     {
       "id": "mdn_keyword",
       "type": "keyword",
-      "name": "MDN Keyword",
+      "name": "Search MDN (Mozilla Developer Network)",
       "default_value": "mdn"
     }
   ]
