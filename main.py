@@ -40,7 +40,8 @@ class KeywordQueryEventListener(EventListener):
         items.append(ExtensionResultItem(icon='images/icon.png',
                                         name=json_string['items'][0]['title'],
                                         description=json_string['items'][0]['snippet'],
-                                        on_enter=OpenUrlAction(json_string['items'][0]['formattedUrl'])))
+                                        # todo filter by og:locale
+                                        on_enter=OpenUrlAction(json_string['items'][0]['pagemap']['metatags'][0]['og:url'])))
 
         return RenderResultListAction(items)
 
