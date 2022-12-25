@@ -42,7 +42,7 @@ class KeywordQueryEventListener(EventListener):
         json_items = json_string['items']
         for item in json_items:
             items.append(ExtensionResultItem(
-                icon='images/icon.png',
+                icon='images/mdn.png',
                 name=item['title'],
                 description=item['snippet'],
                 # could filter by og:locale
