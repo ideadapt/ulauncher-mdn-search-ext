@@ -1,32 +1,17 @@
 {
   "required_api_version": "^2.0.0",
-  "name": "Demo",
-  "description": "Demo extension",
-  "developer_name": "Aleksandr Gornostal",
+  "name": "ulauncher-mdn-search-ext",
+  "description": "Search Mozilla Developer Network (MDN) Documentation in Ulauncher",
+  "developer_name": "Ueli Kunz",
   "icon": "images/icon.png",
   "options": {
-    "query_debounce": 0.05
   },
   "preferences": [
     {
-      "id": "demo_kw",
+      "id": "mdn_keyword",
       "type": "keyword",
-      "name": "Demo",
-      "default_value": "dm"
-    },
-    {
-      "id": "item_name",
-      "type": "input",
-      "name": "Item name",
-      "description": "Name for each item",
-      "default_value": "Item"
-    },
-    {
-      "id": "memo",
-      "type": "text",
-      "name": "Memo",
-      "description": "Write something here",
-      "default_value": ""
+      "name": "MDN Keyword",
+      "default_value": "mdn"
     }
   ]
 }
