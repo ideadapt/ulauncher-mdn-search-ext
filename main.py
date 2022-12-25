@@ -12,37 +12,33 @@ from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 
 logger = logging.getLogger(__name__)
 
-
+# debug via /usr/bin/ulauncher -v | grep -A 5 "mdn"
 class MdnSearchExtension(Extension):
 
     def __init__(self):
         super(MdnSearchExtension, self).__init__()
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
-        #self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
 
 class KeywordQueryEventListener(EventListener):
 
+    # inspired by https://github.com/ChaitanyaPramod/mdn-search/blob/master/mdn_search.js
+    # actually reusing his google custom search project
+    # example request https://www.googleapis.com/customsearch/v1?key=AIzaSyCr6xs0NlPg2hIynXQJWY3o230n6iQyDl0&cx=017146964052550031681:wnjobi1fzcm&q=flex-direction
     def on_event(self, event, extension):
+        url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyCr6xs0NlPg2hIynXQJWY3o230n6iQyDl0&cx=017146964052550031681:wnjobi1fzcm&q=flex-direction'
+        f = urllib.request.urlopen(url)
+        s = f.read().decode('utf-8')
+        j = json.loads(s)
+        logger.info(j)
         items = []
         logger.info('preferences %s' % json.dumps(extension.preferences))
-        # TODO send request to https://www.googleapis.com/customsearch/v1?key=AIzaSyCr6xs0NlPg2hIynXQJWY3o230n6iQyDl0&cx=017146964052550031681:wnjobi1fzcm&q=flex-direction
         items.append(ExtensionResultItem(icon='images/icon.png',
                                         name='MDN Entry 1',
                                         description='Description of Entry 1',
                                         on_enter=OpenUrlAction('https://www.blick.ch')))
 
         return RenderResultListAction(items)
-
-
-class ItemEnterEventListener(EventListener):
-
-    def on_event(self, event, extension):
-        data = event.get_data()
-        # TODO open website from event data
-        return RenderResultListAction([ExtensionResultItem(icon='images/icon.png',
-                                                           name=data['new_name'],
-                                                           on_enter=OpenUrlAction('https://www.blick.ch'))])
 
 
 if __name__ == '__main__':
