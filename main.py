@@ -34,7 +34,8 @@ class KeywordQueryEventListener(EventListener):
         query = event.get_argument()
         if query.strip() == '':
             return []
-        url = 'https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}'.format(key, cx, query)
+        url = 'https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}'.format(key, cx, urllib.parse.quote(query))
+        logger.debug('search mdn via google at %s', url)
         url_stream = urllib.request.urlopen(url)
         response = url_stream.read().decode('utf-8')
         json_string = json.loads(response)
