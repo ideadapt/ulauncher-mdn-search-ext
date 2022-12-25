@@ -1,4 +1,6 @@
 import json
+import urllib.request
+import urllib.parse
 import logging
 from time import sleep
 from ulauncher.api.client.Extension import Extension
@@ -11,6 +13,8 @@ from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
 from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 
 logger = logging.getLogger(__name__)
+key = 'AIzaSyCr6xs0NlPg2hIynXQJWY3o230n6iQyDl0'
+cx = '017146964052550031681:wnjobi1fzcm'
 
 # debug via /usr/bin/ulauncher -v | grep -A 5 "mdn"
 class MdnSearchExtension(Extension):
@@ -26,17 +30,17 @@ class KeywordQueryEventListener(EventListener):
     # actually reusing his google custom search project
     # example request https://www.googleapis.com/customsearch/v1?key=AIzaSyCr6xs0NlPg2hIynXQJWY3o230n6iQyDl0&cx=017146964052550031681:wnjobi1fzcm&q=flex-direction
     def on_event(self, event, extension):
-        url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyCr6xs0NlPg2hIynXQJWY3o230n6iQyDl0&cx=017146964052550031681:wnjobi1fzcm&q=flex-direction'
-        f = urllib.request.urlopen(url)
-        s = f.read().decode('utf-8')
-        j = json.loads(s)
-        logger.info(j)
+        logger.info('preferences %s', json.dumps(extension.preferences))
+        query = event.get_argument()
+        url = 'https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}'.format(key, cx, query)
+        url_stream = urllib.request.urlopen(url)
+        response = url_stream.read().decode('utf-8')
+        json_string = json.loads(response)
         items = []
-        logger.info('preferences %s' % json.dumps(extension.preferences))
         items.append(ExtensionResultItem(icon='images/icon.png',
-                                        name='MDN Entry 1',
-                                        description='Description of Entry 1',
-                                        on_enter=OpenUrlAction('https://www.blick.ch')))
+                                        name=json_string['items'][0]['title'],
+                                        description=json_string['items'][0]['snippet'],
+                                        on_enter=OpenUrlAction(json_string['items'][0]['formattedUrl'])))
 
         return RenderResultListAction(items)
 
