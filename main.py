@@ -45,4 +45,4 @@ class ItemEnterEventListener(EventListener):
 
 
 if __name__ == '__main__':
-    MdnSearchExntension().run()
+    MdnSearchExtension().run()
