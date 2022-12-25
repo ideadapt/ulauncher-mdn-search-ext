@@ -1,6 +1,6 @@
 {
   "required_api_version": "^2.0.0",
-  "name": "ulauncher-mdn-search-ext",
+  "name": "Search MDN",
   "description": "Search Mozilla Developer Network (MDN) Documentation in Ulauncher",
   "developer_name": "Ueli Kunz",
   "icon": "images/mdn.png",
